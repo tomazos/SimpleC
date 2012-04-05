@@ -1,0 +1,19 @@
+
+// declare integers a, b and c
+
+int a;
+int b;
+int c;
+
+// read a and b in as input
+
+scan a;
+scan b;
+
+// add them together into c
+
+c = a + b;
+
+// print out c
+
+print c;

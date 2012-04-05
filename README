@@ -1,0 +1,72 @@
+
+simplec 1.0d1 - demonstration of compiler construction with yacc & lex
+
+Copyright (C) 2007   Andrew Tomazos <andrew@tomazos.com>
+
+This software is available under the licensing terms set forth in the
+attached LICENSE file.
+
+simplec demonstrates the use of yacc and lex to construct a
+basic compiler using C and C++.
+
+The grammar of the simplec language is as follows:
+
+CompilationUnit:
+	(Statement ';')+   # a compilation unit conists of
+					   # semi-colon seperated statements
+
+Statement:
+	LocalVarDecl       # declare a variable: int a;
+	Assignment		   # assign a variable: a = b;
+	ScanStmt		   # read input into variable: scan a;
+	PrintStmt          # print out a variable: print a;
+
+LocalVarDecl:
+	"int" Identifier
+	
+PrintStmt:
+	"print" Identifier
+
+ScanStmt:
+	"scan" Identifier
+
+Assignment:
+	Identifier "=" Expression
+
+Expression:
+	Identifier
+	Number
+	"(" Expression ")"
+	Expression Operator Expression
+	"-" Expression					# negation
+
+Operator:
+	"+" | "-" | "*" | "/"
+
+To create the compiler, call make:
+
+	$ cd simplec-1.0
+	$ make
+
+This will compile everything into an executable called "simplec"
+and then will perform a test.  Ideally you should see "test passed".
+
+To use the resulting "simplec", write a program with the above
+grammar.  (See "test_program" for an example).  Save it to a file
+"my_program" and then execute it as follows:
+
+	$ simplec my_program
+
+Standard input is used for scan statements, standard output is
+used for print statements.  They can be redirected.
+
+To execute the included test manually do the following:
+
+	$ simplec test_program < test_input > test_output
+	$ diff test_output test_expected
+
+Have fun,
+Andrew.
+--
+Andrew Tomazos <andrew@tomazos.com> <http://www.tomazos.com>
+
